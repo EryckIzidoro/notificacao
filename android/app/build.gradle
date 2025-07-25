@@ -1,16 +1,13 @@
 buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'com.google.gms:google-services:4.4.3'
     }
 }
 
 plugins {
-    id "com.android.application"
-    // START: FlutterFire Configuration
-    id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
-    id "kotlin-android"
+    id 'com.android.application'
     id "dev.flutter.flutter-gradle-plugin"
+    id "groovy-android"
 }
 
 
@@ -36,6 +33,14 @@ android {
     namespace "com.example.notificacao"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    
+    sourceSets {
+        main {
+            groovy {
+                srcDirs = ['src/main/groovy']
+            }
+        }
+    }
 
     compileSdkVersion 34
     ndkVersion "26.2.11394342" // Versão estável mais recente
@@ -43,10 +48,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
     }
 
     defaultConfig {
@@ -80,9 +81,12 @@ flutter {
     source '../..'
 }
 
+
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:32.7.2') 
+    implementation platform('com.google.firebase:firebase-bom:34.0.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.codehaus.groovy:groovy:3.0.9:grooid'
 }
+apply plugin: 'com.google.gms.google-services'
